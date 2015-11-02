@@ -1,0 +1,9 @@
+header {height: 90px; width: 100%; background-color: #ffbbbb;}
+#a {height: 60px; width: 50%; float:right; background-color: #bbffbb;}
+#b {height: 60px; width: 50%; background-color: #bbbbff;}
+#c {float:right; height:480px; width:80%}
+#d {height: 240px; width: 20%; float:left; background-color: #ffbbff;}
+#e {height: 240px; width: 20%; float:left; background-color: #ffffbb;}
+#f {height: 55px; width: 33%; float:left; background-color: #bbffff;}
+#g {height: 55px; width: 33%; float:left; background-color: #bbbfff;}
+#h {height: 55px; width: 33%; float:left; background-color: #fbbbff;}
