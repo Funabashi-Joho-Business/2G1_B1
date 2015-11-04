@@ -1,0 +1,106 @@
+/*蜈ｨ菴馴Κ蛻�*/
+body {
+	text-align: center;
+	background-color: #fffff;
+}
+
+/*title驛ｨ蛻�*/
+.title{
+	width:100%;
+	height:150px;
+	background-color: #99cc00;
+}
+
+/*.body荳ｭ螟ｮ驛ｨ蛻�*/
+
+.body {
+ 	width: 1366px;
+ 	height:718px;
+ 	margin: 0 auto;
+    text-align: left;
+    border: 1px solid #000;
+}
+
+.aaa{
+	width:100%;
+	height:100px ;
+	border-bottom: 1px solid #000;
+}
+
+.counter{
+	width:50%;
+	height:99px;
+	float:left;
+	text-align:center;
+	background-color: #ffff00;
+}
+
+.search{
+	width:50%;
+	height:99px;
+	float:right;
+	text-align:center;
+	background-color: #66cdaa;
+}
+
+.news iframe{
+	width:70%;
+	height: 612px ;
+	float:right;
+	border-left: 1px solid #000;
+	text-align:center;
+}
+/*
+.news div{
+	overflow: scroll;
+}
+*/
+
+.bbb{
+	width: 30%;
+	height: 600px ;
+
+}
+
+.twitter{
+	height: 298px ;
+	border-bottom:1px solid #000;
+	background-color: #ffa500;
+}
+
+.topnews{
+	height: 277px ;
+	background-color: #cd853f;
+}
+
+
+/*fooder驛ｨ蛻�*/
+.fooder{
+	width:100%;
+	height:150px;
+	background-color: #99cc00;
+}
+
+.home{
+	width:33%;
+	height: 150px ;
+	float:left;
+	text-align:center;
+	border-right:1px dotted #000;
+}
+
+.mail{
+	width:33%;
+	height: 150px ;
+	float:left;
+	text-align:center;
+	border-right:1px dotted #000;
+}
+
+
+.ccc{
+	width:33%;
+	height: 150px ;
+	float:left;
+	text-align:center;
+}
