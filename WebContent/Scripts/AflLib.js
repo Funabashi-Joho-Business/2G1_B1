@@ -114,7 +114,7 @@
 		}
 		return dest;
 	}
-
+	AFL.replaceText = replaceText;
 	//---------------------------------------
 	//アドレスの取得、パラメータの削除
 	//	引数	無し
@@ -254,15 +254,15 @@
 	}
 	AFL.readFile = function(url,proc)
 	{
-		var xmlHttp = new XMLHttpRequest();;
+		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = function () {
 		if (xmlHttp.readyState == 4) {
 				proc(xmlHttp);
 			}
-		}	
+		}
 		xmlHttp.open('POST', url, true);
 		xmlHttp.send();
-	
+
 	}
 	//---------------------------------------------------------
 	//Ajaxによるファイル送信
@@ -1041,7 +1041,7 @@
 		}
 		//---------------------------------------
 		//位置の設定
-		//	[引数]   
+		//	[引数]
 		//  x X座標(省略時センタリング)
 		//  y Y座標(省略時センタリング)
 		//	[戻り値] 無し
@@ -1049,9 +1049,11 @@
 			if (x == null && y == null) {
 				var parent = this.getParent();
 				if (parent) {
-					this.setPos(
-						(parent.getClientWidth() - this.getWidth()) / 2,
-						(parent.getClientHeight() - this.getHeight()) / 2);
+					var px = (parent.getClientWidth() - this.getWidth()) / 2;
+					var py = (parent.getClientHeight() - this.getHeight()) / 2;
+					if(px < 0) px = 0;
+					if(py < 0) py = 0;
+					this.setPos(px,py);
 				}
 			}
 			else {
@@ -1122,7 +1124,7 @@
 		//---------------------------------------
 		//子ウインドウ時の配置設定
 		//[引数]
-		//style 
+		//style
 		// WM.STYLE_NONE 自動配置無し
 		// WM.STYLE_LEFT 左
 		// WM.STYLE_RIGHT 右
@@ -1323,7 +1325,7 @@
 		}
 		//---------------------------------------
 		//バーの方向設定
-		//	[引数]  
+		//	[引数]
 		//	style
 		//  WM.BAR_NS 縦バー
 		//  WM.BAR_WE 横バー
@@ -1482,7 +1484,7 @@
 
 
 				//マーク
-				ctx.strokeStyle = color[3];;
+				ctx.strokeStyle = color[3];
 				ctx.moveTo(width, 0);
 				ctx.lineTo(width, height);
 				ctx.lineTo(0, height);
@@ -2211,6 +2213,9 @@
 		}
 
 		var cal = WM.createWindow();
+		cal.style.fontSize = "13px";
+		cal.style.lineHeight = "17px";
+		cal.style.fontFamily = "monospace";
 		cal.setSize(275, 220);
 		var calendar = document.createElement("div");
 		calendar.style.width = "275px";
@@ -2416,6 +2421,7 @@
 		var win = WM.createFrameWindow();
 		win.setSize(200, 100);
 		win.setBackgroundColor(0xaaffffff);
+
 		var mMsgParent = document.createElement("div");
 		mMsgParent.style.width = win.getClientWidth() + "px";
 		mMsgParent.style.height = win.getClientHeight() + "px";
