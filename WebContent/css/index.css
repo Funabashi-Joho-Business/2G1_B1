@@ -6,7 +6,7 @@ body {
 
 /*title鬩幢ｽｨ陋ｻ�ｿｽ*/
 .title{
-	width:100%;
+	width:1247;
 	height:150px;
 	background-color: #99cc00;
 }
@@ -14,6 +14,10 @@ body {
 /*.body闕ｳ�ｽｭ陞滂ｽｮ鬩幢ｽｨ陋ｻ�ｿｽ*/
 
 .body {
+<<<<<<< HEAD
+=======
+ 	width: 1247px;
+>>>>>>> ec977332be2d79be62d76880fe568ec1a23d8b4a
  	height:718px;
  	margin: 0 auto;
     text-align: left;
