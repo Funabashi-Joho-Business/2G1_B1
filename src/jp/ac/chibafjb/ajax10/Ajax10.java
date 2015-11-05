@@ -55,7 +55,7 @@ public class Ajax10 extends HttpServlet {
 			mOracle.connect("ux4", DB_ID, DB_PASS);
 
 			//テーブルが無ければ作成
-			if(!mOracle.isTable("db_exam10"))
+			if(!mOracle.isTable("db_exam10")/*&&!mOracle.isTable("db_coment01")*/)
 			{
 				mOracle.execute("create table db_exam10(id number,name varchar2(200),msg varchar2(200))");
 				mOracle.execute("create sequence db_exam10_seq");
