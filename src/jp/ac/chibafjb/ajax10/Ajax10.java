@@ -50,7 +50,7 @@ public class Ajax10 extends HttpServlet {
 			{
 				/*mOracle.execute("create table db_kigi(id number,title varchar2(200),news varchar2(4000))");
 				mOracle.execute("create sequence db_kigi_seq");*/
-				mOracle.execute("create table db_exam10(kigi_id number,msg_id number,name varchar2(200),msg varchar2(200))");
+				mOracle.execute("create table db_exam10(id number,name varchar2(200),msg varchar2(200))");
 				mOracle.execute("create sequence db_exam10_seq");
 			}
 		} catch (Exception e) {
@@ -89,7 +89,7 @@ public class Ajax10 extends HttpServlet {
         if("write".equals(recvData.cmd))
         {
         	//書き込み処理
-        	String sql = String.format("insert into db_exam10 values('%d',db_exam10_seq.nextval,'%s','%s')",
+        	String sql = String.format("insert into db_exam10 values(db_exam10_seq.nextval,'%s','%s')",
         			recvData.name,recvData.msg);
         	mOracle.execute(sql);
         }
