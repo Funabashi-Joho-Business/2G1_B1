@@ -55,12 +55,12 @@ public class Ajax10 extends HttpServlet {
 			mOracle.connect("ux4", DB_ID, DB_PASS);
 
 			//テーブルが無ければ作成
-			if(/*!mOracle.isTable("db_kigi")&&*/ !mOracle.isTable("db_exam10"))
+			if(!mOracle.isTable("db_kigi")&& !mOracle.isTable("db_exam"))
 			{
-				/*mOracle.execute("create table db_kigi(id number,title varchar2(200),news varchar2(4000))");
-				mOracle.execute("create sequence db_kigi_seq");*/
-				mOracle.execute("create table db_exam10(id number,name varchar2(200),msg varchar2(200))");
-				mOracle.execute("create sequence db_exam10_seq");
+				mOracle.execute("create table db_kigi(id number,title varchar2(200),news varchar2(4000))");
+				mOracle.execute("create sequence db_kiji_seq");
+				mOracle.execute("create table db_exam(kiji_id number,com_id number,name varchar2(200),msg varchar2(200))");
+				mOracle.execute("create sequence db_exam_seq");
 			}
 		} catch (Exception e) {
 			System.err.println("認証に失敗しました");
@@ -93,12 +93,15 @@ public class Ajax10 extends HttpServlet {
         response.setContentType("text/plain; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
+        //記事の受け取り処理
+
+
         //データの受け取り処理
         RecvData recvData = JSON.decode(request.getInputStream(),RecvData.class);
         if("write".equals(recvData.cmd))
         {
         	//書き込み処理
-        	String sql = String.format("insert into db_exam10 values(db_exam10_seq.nextval,'%s','%s')",
+        	String sql = String.format("insert into db_exam values(db_exam_seq.nextval,'%s','%s')",
         			recvData.name,recvData.msg);
         	mOracle.execute(sql);
         }
@@ -107,7 +110,7 @@ public class Ajax10 extends HttpServlet {
         try {
 			//データの送信処理
 			ArrayList<SendData> list = new ArrayList<SendData>();
-			ResultSet res = mOracle.query("select * from db_exam10 order by id ");
+			ResultSet res = mOracle.query("select * from db_exam order by id ");
 			while(res.next())
 			{
 				SendData sendData = new SendData();
