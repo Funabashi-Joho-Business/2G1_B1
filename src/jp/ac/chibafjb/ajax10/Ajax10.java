@@ -1,6 +1,31 @@
 package jp.ac.chibafjb.ajax10;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import net.arnx.jsonic.JSON;
+
+
+class IchiranRecv
+{
+	public int id;
+}
+
+class KijiSend
+{
+	public int id;
+	public String title;
+	public String news;
+}
 
 class RecvData
 {
@@ -43,14 +68,14 @@ public class Ajax10 extends HttpServlet {
 			mOracle.connect("ux4", DB_ID, DB_PASS);
 
 			//テーブルが無ければ作成
-<<<<<<< HEAD
+
 			if(!mOracle.isTable("db_kigi")&& !mOracle.isTable("db_exam"))
-=======
+
 
 			if(!mOracle.isTable("db_exam10")/*&&!mOracle.isTable("db_coment01")*/)
 
 			if(/*!mOracle.isTable("db_kigi")&&*/ !mOracle.isTable("db_exam10"))
->>>>>>> 55055b4bdd583bacf8499e3e37d794115510abd2
+
 			{
 				mOracle.execute("create table db_kigi(id number,title varchar2(200),news varchar2(4000))");
 				mOracle.execute("create sequence db_kiji_seq");
@@ -89,6 +114,14 @@ public class Ajax10 extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         //記事の受け取り処理
+        IchiranRecv ichiranRecv = JSON.decode(request.getInputStream(),IchiranRecv.class);
+        if("write".equals(ichiranRecv.id))
+        {
+        	String d = String.valueOf(ichiranRecv.id);
+        	ResultSet id = mOracle.query("select * from db_kigi where id = '%s' ",d);
+        }
+
+
 
 
         //データの受け取り処理

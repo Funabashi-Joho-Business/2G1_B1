@@ -14,7 +14,7 @@ function onRecv(datas)
 	{
 		var data = datas[index];
 		output.innerHTML = "<a href=\"Kiji.html\">"
-		output.innerHTML += AFL.sprintf("[%d]%s<br><hr>",data.id,data.title) + output.innerHTML;
+		output.innerHTML += AFL.sprintf("[%d]%s",data.id,data.title)
 		output.innerHTML += "</a><hr><br>"
 	}
 }

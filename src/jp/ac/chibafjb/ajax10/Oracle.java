@@ -72,6 +72,7 @@ public class Oracle {
 			}
         }
     }
+
     //select系SQLの実行用
     public ResultSet query(String sql) {
         if (mConnection == null)
@@ -97,7 +98,35 @@ public class Oracle {
 				e1.printStackTrace();
 			}
             return null;
-        }   
+        }
+    }
+
+    //select系SQLの実行用
+    public ResultSet query(String sql , String d) {
+        if (mConnection == null)
+            return null;
+        Statement pstm = null;
+        ResultSet rset = null;
+        try {
+            // SQLの実行領域の作成
+            pstm = mConnection.createStatement();
+            // データの抽出
+            rset = pstm.executeQuery(sql);
+            return rset;
+
+        } catch (SQLException e) {
+            // 失敗メッセージの表示
+            System.err.println(e.getMessage());
+            try {
+				// SQLの実行領域の解放
+				if (pstm != null)
+				    pstm.close();
+			} catch (Exception e1) {
+				// TODO 自動生成された catch ブロック
+				e1.printStackTrace();
+			}
+            return null;
+        }
     }
     //取得したデータの解放
     public boolean closeResult(ResultSet rset)
