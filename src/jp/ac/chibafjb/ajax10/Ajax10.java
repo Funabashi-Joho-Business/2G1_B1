@@ -120,9 +120,9 @@ public class Ajax10 extends HttpServlet {
         	String d = String.valueOf(ichiranRecv.id);
         	ResultSet id = mOracle.query("select * from db_kigi where id = '%s' ",d);
         }
-
-
-
+        	/*while(id.next()){
+        KijiSend kijiSend = new KijiSend();
+        kijiSend.title = id.getString(2);*/
 
         //データの受け取り処理
         RecvData recvData = JSON.decode(request.getInputStream(),RecvData.class);
