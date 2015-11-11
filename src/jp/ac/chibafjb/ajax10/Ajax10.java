@@ -14,6 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.arnx.jsonic.JSON;
 
+class IchiranSend
+{
+	public int id;
+	public String title;
+}
 
 class IchiranRecv
 {
@@ -113,16 +118,46 @@ public class Ajax10 extends HttpServlet {
         response.setContentType("text/plain; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        //記事の受け取り処理
+    	//一覧受け取り
+        try {
+			//データの送信処理
+			ArrayList<IchiranSend> list3 = new ArrayList<IchiranSend>();
+			ResultSet res = mOracle.query("select * from db_kigi order by id desc");
+			while(res.next())
+			{
+				IchiranSend ichiranSend = new IchiranSend();
+				ichiranSend.id = res.getInt(1);
+				ichiranSend.title = res.getString(2);
+				list3.add(ichiranSend);
+			}
+			//JSON形式に変換
+            String json2 = JSON.encode(list3);
+            //出力
+            out.println(json2);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+        //記事の受け取り＆送信処理
         IchiranRecv ichiranRecv = JSON.decode(request.getInputStream(),IchiranRecv.class);
         if("write".equals(ichiranRecv.id))
         {
         	String d = String.valueOf(ichiranRecv.id);
         	ResultSet id = mOracle.query("select * from db_kigi where id = '%s' ",d);
+	        KijiSend kijiSend = new KijiSend();
+	        try {
+	        	ArrayList<KijiSend> list = new ArrayList<KijiSend>();
+				kijiSend.title = id.getString(2);
+				kijiSend.news = id.getString(3);
+				//JSON形式に変換
+	            String json = JSON.encode(list);
+	            //出力
+	            out.println(json);
+			} catch (SQLException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
         }
-        	/*while(id.next()){
-        KijiSend kijiSend = new KijiSend();
-        kijiSend.title = id.getString(2);*/
 
         //データの受け取り処理
         RecvData recvData = JSON.decode(request.getInputStream(),RecvData.class);
@@ -137,7 +172,7 @@ public class Ajax10 extends HttpServlet {
 
         try {
 			//データの送信処理
-			ArrayList<SendData> list = new ArrayList<SendData>();
+			ArrayList<SendData> list2 = new ArrayList<SendData>();
 			ResultSet res = mOracle.query("select * from db_exam order by id ");
 			while(res.next())
 			{
@@ -145,12 +180,12 @@ public class Ajax10 extends HttpServlet {
 				sendData.id = res.getInt(1);
 				sendData.name = res.getString(2);
 				sendData.msg = res.getString(3);
-				list.add(sendData);
+				list2.add(sendData);
 			}
 			//JSON形式に変換
-            String json = JSON.encode(list);
+            String json2 = JSON.encode(list2);
             //出力
-            out.println(json);
+            out.println(json2);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
