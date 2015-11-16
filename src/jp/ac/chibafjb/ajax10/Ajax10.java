@@ -122,7 +122,7 @@ public class Ajax10 extends HttpServlet {
         try {
 			//データの送信処理
 			ArrayList<IchiranSend> list3 = new ArrayList<IchiranSend>();
-			ResultSet res = mOracle.query("select * from db_kigi order by id desc");
+			ResultSet res = mOracle.query("select * from db_kigi order by id ");
 			while(res.next())
 			{
 				IchiranSend ichiranSend = new IchiranSend();
@@ -140,13 +140,13 @@ public class Ajax10 extends HttpServlet {
 
         //記事の受け取り＆送信処理
         IchiranRecv ichiranRecv = JSON.decode(request.getInputStream(),IchiranRecv.class);
+        ArrayList<KijiSend> list = new ArrayList<KijiSend>();
         if("write".equals(ichiranRecv.id))
         {
         	String d = String.valueOf(ichiranRecv.id);
         	ResultSet id = mOracle.query("select * from db_kigi where id = '%s' ",d);
 	        KijiSend kijiSend = new KijiSend();
 	        try {
-	        	ArrayList<KijiSend> list = new ArrayList<KijiSend>();
 				kijiSend.title = id.getString(2);
 				kijiSend.news = id.getString(3);
 				//JSON形式に変換
@@ -160,35 +160,40 @@ public class Ajax10 extends HttpServlet {
         }
 
         //データの受け取り処理
-        RecvData recvData = JSON.decode(request.getInputStream(),RecvData.class);
-        if("write".equals(recvData.cmd))
-        {
-        	//書き込み処理
-        	String sql = String.format("insert into db_exam values(db_exam_seq.nextval,'%s','%s')",
-        			recvData.name,recvData.msg);
-        	mOracle.execute(sql);
-        }
+//        try {
+//			RecvData recvData = JSON.decode(request.getInputStream(),RecvData.class);
+//			if("write".equals(recvData.cmd))
+//			{
+//				//書き込み処理
+//				String sql = String.format("insert into db_exam values(db_exam_seq.nextval,'%s','%s')",
+//						recvData.name,recvData.msg);
+//				mOracle.execute(sql);
+//			}
+//		} catch (Exception e1) {
+//			// TODO 自動生成された catch ブロック
+//			e1.printStackTrace();
+//		}
 
 
-        try {
-			//データの送信処理
-			ArrayList<SendData> list2 = new ArrayList<SendData>();
-			ResultSet res = mOracle.query("select * from db_exam order by id ");
-			while(res.next())
-			{
-				SendData sendData = new SendData();
-				sendData.id = res.getInt(1);
-				sendData.name = res.getString(2);
-				sendData.msg = res.getString(3);
-				list2.add(sendData);
-			}
-			//JSON形式に変換
-            String json2 = JSON.encode(list2);
-            //出力
-            out.println(json2);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+//        try {
+//			//データの送信処理
+//			ArrayList<SendData> list2 = new ArrayList<SendData>();
+//			ResultSet res = mOracle.query("select * from db_exam order by id ");
+//			while(res.next())
+//			{
+//				SendData sendData = new SendData();
+//				sendData.id = res.getInt(1);
+//				sendData.name = res.getString(2);
+//				sendData.msg = res.getString(3);
+//				list2.add(sendData);
+//			}
+//			//JSON形式に変換
+//            String json2 = JSON.encode(list2);
+//            //出力
+//            out.println(json2);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
 
 	}
 }
