@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.arnx.jsonic.JSON;
+import net.arnx.jsonic.JSONException;
 
 class IchiranSend
 {
@@ -35,8 +36,8 @@ class KijiSend
 class RecvData
 {
 	public String cmd;
-	public String name;
-	public String msg;
+	public IchiranRecv ichiranRecv;
+
 }
 
 class SendData
@@ -118,46 +119,71 @@ public class Ajax10 extends HttpServlet {
         response.setContentType("text/plain; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-    	//一覧受け取り
+        //記事の受け取り＆送信処理
+        RecvData recvData = null;
         try {
-			//データの送信処理
-			ArrayList<IchiranSend> list3 = new ArrayList<IchiranSend>();
-			ResultSet res = mOracle.query("select * from db_kigi order by id ");
-			while(res.next())
-			{
-				IchiranSend ichiranSend = new IchiranSend();
-				ichiranSend.id = res.getInt(1);
-				ichiranSend.title = res.getString(2);
-				list3.add(ichiranSend);
-			}
-			//JSON形式に変換
-            String json2 = JSON.encode(list3);
-            //出力
-            out.println(json2);
-		} catch (SQLException e) {
-			e.printStackTrace();
+			recvData = JSON.decode(request.getInputStream(),RecvData.class);
+		} catch (Exception e1) {
 		}
 
-        //記事の受け取り＆送信処理
-        IchiranRecv ichiranRecv = JSON.decode(request.getInputStream(),IchiranRecv.class);
-        ArrayList<KijiSend> list = new ArrayList<KijiSend>();
-        if("write".equals(ichiranRecv.id))
+        //記事一覧
+        if(recvData == null || recvData.cmd.equals("read"))
         {
-        	String d = String.valueOf(ichiranRecv.id);
-        	ResultSet id = mOracle.query("select * from db_kigi where id = '%s' ",d);
-	        KijiSend kijiSend = new KijiSend();
-	        try {
-				kijiSend.title = id.getString(2);
-				kijiSend.news = id.getString(3);
-				//JSON形式に変換
-	            String json = JSON.encode(list);
-	            //出力
-	            out.println(json);
-			} catch (SQLException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
+        	//一覧受け取り
+            try {
+    			//データの送信処理
+    			ArrayList<IchiranSend> list3 = new ArrayList<IchiranSend>();
+    			ResultSet res = mOracle.query("select * from db_kigi order by id desc");
+    			while(res.next())
+    			{
+    				IchiranSend ichiranSend = new IchiranSend();
+    				ichiranSend.id = res.getInt(1);
+    				ichiranSend.title = res.getString(2);
+    				list3.add(ichiranSend);
+    			}
+    			//JSON形式に変換
+                String json2 = JSON.encode(list3);
+                //出力
+                out.println(json2);
+    		} catch (SQLException e) {
+    			e.printStackTrace();
+    		}
+        }else if(recvData.cmd.equals("read2"))
+        {
+            //記事内容一覧
+            //記事の受け取り＆送信処理
+            IchiranRecv ichiranRecv = recvData.ichiranRecv;
+           // if("write".equals(ichiranRecv.id))
+            {
+            	String sql = String.format("select * from db_kigi where id = '%d' ",ichiranRecv.id);
+            	ResultSet res = mOracle.query(sql);
+            	try {
+					if(res.next())
+					{
+					    KijiSend kijiSend = new KijiSend();
+
+							kijiSend.title = res.getString(2);
+							kijiSend.news = res.getString(3);
+							//JSON形式に変換
+					        String json = JSON.encode(kijiSend);
+					        //出力
+					        out.println(json);
+
+					}
+					res.close();
+				} catch (JSONException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+
+            }
+
         }
+
+
 
         //データの受け取り処理
 //        try {

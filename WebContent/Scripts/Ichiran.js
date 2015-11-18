@@ -11,6 +11,7 @@ function Main()
 	{
 		//内容のクリア
 		output.innerHTML = "";
+		output.innerHTML += "<br>";
 		for(var index in datas)
 		{
 			var data = datas[index];
@@ -20,23 +21,35 @@ function Main()
 			output.appendChild(div);
 			div.addEventListener("click",onClick);
 			output.appendChild(document.createElement("hr"));
+		}
+	}
 
-			//output.innerHTML = AFL.sprintf("<span id='%d' onclick='onClick(this)'>%s</span><hr><br>",data.id,data.title) + output.innerHTML;
-
+		//データ受信処理
+		function onRecv2(data)
+		{
+			output.innerHTML = "<br>";
+			output.innerHTML += data.title;
+			output.innerHTML += "<br>";
+			output.innerHTML += "<hr>";
+			output.innerHTML += "<br>";
+			output.innerHTML += data.news;
 		}
 
-	}
+
+
 	//ボタンクリック時の送信処理
 	function onClick()
 	{
 		//データ送信
-		var ichiranRecv = {};
-		ichiranRecv.id = this.id;
-		AFL.sendJson("Ajax10",ichiranRecv,onRecv);
+		//データ受信要求
+		var sendData = {"cmd":"read2"};
+		sendData.ichiranRecv = {};
+		sendData.ichiranRecv.id = this.id;
+		AFL.sendJson("Ajax10",sendData,onRecv2);
 	}
 	//データ受信要求
-	var ichiranSend = {"cmd":"read"};
-	AFL.sendJson("Ajax10",ichiranSend,onRecv);
+	var sendData = {"cmd":"read"};
+	AFL.sendJson("Ajax10",sendData,onRecv);
 }
 
 
