@@ -186,40 +186,40 @@ public class Ajax10 extends HttpServlet {
 
 
         //データの受け取り処理
-//        try {
-//			RecvData recvData = JSON.decode(request.getInputStream(),RecvData.class);
-//			if("write".equals(recvData.cmd))
-//			{
-//				//書き込み処理
-//				String sql = String.format("insert into db_exam values(db_exam_seq.nextval,'%s','%s')",
-//						recvData.name,recvData.msg);
-//				mOracle.execute(sql);
-//			}
-//		} catch (Exception e1) {
-//			// TODO 自動生成された catch ブロック
-//			e1.printStackTrace();
-//		}
+/*       try {
+			RecvData2 recvData2 = JSON.decode(request.getInputStream(),RecvData2.class);
+			if("write".equals(recvData2))
+			{
+				//書き込み処理
+				String sql = String.format("insert into db_exam values(db_exam_seq.nextval,'%s','%s')",
+						recvData2.name,recvData2.msg);
+				mOracle.execute(sql);
+			}
+		} catch (Exception e1) {
+			// TODO 自動生成された catch ブロック
+		e1.printStackTrace();
+		}
 
 
-//        try {
-//			//データの送信処理
-//			ArrayList<SendData> list2 = new ArrayList<SendData>();
-//			ResultSet res = mOracle.query("select * from db_exam order by id ");
-//			while(res.next())
-//			{
-//				SendData sendData = new SendData();
-//				sendData.id = res.getInt(1);
-//				sendData.name = res.getString(2);
-//				sendData.msg = res.getString(3);
-//				list2.add(sendData);
-//			}
-//			//JSON形式に変換
-//            String json2 = JSON.encode(list2);
-//            //出力
-//            out.println(json2);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
+      try {
+		//データの送信処理
+		ArrayList<SendData> list2 = new ArrayList<SendData>();
+		ResultSet res = mOracle.query("select * from db_exam order by id ");
+		while(res.next())
+		{
+			SendData sendData = new SendData();
+			sendData.id = res.getInt(1);
+			sendData.name = res.getString(2);
+			sendData.msg = res.getString(3);
+			list2.add(sendData);
+		}
+		//JSON形式に変換
+          String json2 = JSON.encode(list2);
+          //出力
+            out.println(json2);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}*/
 
 	}
 }

@@ -11,7 +11,9 @@ function Main()
 	{
 		//内容のクリア
 		output.innerHTML = "";
-		output.innerHTML += "<br>";
+		output.innerHTML += "<div id=news style=\"background-color: #000000;\">" +
+				"<h2 style=\"color: #ffffff; font-family: \"ＭＳ 明朝\",serif;\">NEWS</h2> </div>";
+		//output.innerHTML += "<br>";
 		for(var index in datas)
 		{
 			var data = datas[index];
@@ -24,15 +26,17 @@ function Main()
 		}
 	}
 
-		//データ受信処理
+		//記事内容受信処理
 		function onRecv2(data)
 		{
 			output.innerHTML = "<br>";
-			output.innerHTML += data.title;
-			output.innerHTML += "<br>";
-			output.innerHTML += "<hr>";
-			output.innerHTML += "<br>";
+			output.innerHTML +=data.title;
+			output.innerHTML += "<br><hr><br>";
 			output.innerHTML += data.news;
+			output.innerHTML += "<br><hr><br>";
+			output.innerHTML += "<input type=\"button\" id=\"bt\" value=\"送信\">" +
+					"<br>名前<br><input type=\"text\" id=\"name\">" +
+					"<br>メッセージ<br><textarea rows=\"5\" cols=\"40\" id=\"msg\"></textarea>";
 		}
 
 

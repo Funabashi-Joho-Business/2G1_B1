@@ -5,7 +5,7 @@ function Main()
 {
 	//タイトルの設定
 	document.title = "サンプル10";
-	
+
 	//セレクターで各要素のインスタンスを取得
 	var output = document.querySelector("div#output");
 	var data1 = document.querySelector("input#name");
@@ -17,7 +17,6 @@ function Main()
 	function onRecv(datas)
 	{
 		//内容のクリア
-		output.innerHTML = "";
 		for(var index in datas)
 		{
 			var data = datas[index];
@@ -35,7 +34,7 @@ function Main()
 		AFL.sendJson("Ajax10",sendData,onRecv);
 	}
 
-	
+
 	//データ受信要求
 	var sendData = {"cmd":"read"};
 	AFL.sendJson("Ajax10",sendData,onRecv);
