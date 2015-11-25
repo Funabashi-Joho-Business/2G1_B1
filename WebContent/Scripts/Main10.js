@@ -1,4 +1,5 @@
 ﻿//ページ読み込みイベントに登録
+
 document.addEventListener("DOMContentLoaded", Main, false);
 
 function Main()
@@ -7,7 +8,7 @@ function Main()
 	document.title = "サンプル10";
 
 	//セレクターで各要素のインスタンスを取得
-	var output = document.querySelector("div#output");
+	var fput = document.querySelector("div#fput");
 	var data1 = document.querySelector("input#name");
 	var data2 = document.querySelector("textarea#msg");
 	var button = document.querySelector("input#bt");
@@ -20,7 +21,7 @@ function Main()
 		for(var index in datas)
 		{
 			var data = datas[index];
-			output.innerHTML = AFL.sprintf("[%d]%s<br>%s<hr>",data.id,data.name,data.msg) + output.innerHTML;
+			fput.innerHTML = AFL.sprintf("[%d]%s<br>%s<hr>",data.id,data.name,data.msg) + fput.innerHTML;
 		}
 	}
 	//ボタンクリック時の送信処理

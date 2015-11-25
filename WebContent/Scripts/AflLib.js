@@ -156,7 +156,7 @@
 		else {
 			var date = new Date();
 			date.setDate(date.getDate() - 1);
-			document.cookie = encodeURI(name) + "= ; expires=" + date.toGMTString() + ";";
+			document.cookie = encodeURI(name) + "= ; expires=" + date.toGMTString() + ";path=/;";
 		}
 	}
 
@@ -371,8 +371,10 @@
 			}
 		}
 		catch (e) {
+			alert(e);
 			alert("読み込みエラー");
-			proc(null);
+			if (proc != null)
+				proc(null);
 			return null;
 		}
 		return null;

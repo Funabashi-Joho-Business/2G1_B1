@@ -40,6 +40,13 @@ class RecvData
 
 }
 
+class RecvData2
+{
+	public String cmd;
+	public String name;
+	public String msg;
+}
+
 class SendData
 {
 	public int id;
@@ -186,13 +193,15 @@ public class Ajax10 extends HttpServlet {
 
 
         //データの受け取り処理
-/*       try {
+       try {
 			RecvData2 recvData2 = JSON.decode(request.getInputStream(),RecvData2.class);
 			if("write".equals(recvData2))
 			{
+				//RecvData ichiranRecv = new RecvData();
+				IchiranRecv ichiranRecv = recvData.ichiranRecv;
 				//書き込み処理
-				String sql = String.format("insert into db_exam values(db_exam_seq.nextval,'%s','%s')",
-						recvData2.name,recvData2.msg);
+				String sql = String.format("insert into db_exam values('%s',db_exam_seq.nextval,'%s','%s')",
+						ichiranRecv.id,recvData2.name,recvData2.msg);
 				mOracle.execute(sql);
 			}
 		} catch (Exception e1) {
@@ -203,8 +212,10 @@ public class Ajax10 extends HttpServlet {
 
       try {
 		//データの送信処理
+    	  IchiranRecv ichiranRecv = recvData.ichiranRecv;
 		ArrayList<SendData> list2 = new ArrayList<SendData>();
-		ResultSet res = mOracle.query("select * from db_exam order by id ");
+		String sql = String.format("select * from db_exam where kiji_id = '%s'  order by id ",ichiranRecv.id);
+		ResultSet res = mOracle.query(sql);
 		while(res.next())
 		{
 			SendData sendData = new SendData();
@@ -219,7 +230,7 @@ public class Ajax10 extends HttpServlet {
             out.println(json2);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}*/
+		}
 
 	}
 }
