@@ -195,8 +195,26 @@ public class Ajax10 extends HttpServlet {
 
             }
 
-
-
+            try {
+    			//データの送信処理
+    			ArrayList<SendData> list2 = new ArrayList<SendData>();
+    			String sql = String.format("select * from db_exam where kiji_id = '%d'  order by id ",ichiranRecv.id);
+    			ResultSet res = mOracle.query(sql);
+    			while(res.next())
+    			{
+    				SendData sendData = new SendData();
+    				sendData.id = res.getInt(1);
+    				sendData.name = res.getString(2);
+    				sendData.msg = res.getString(3);
+    				list2.add(sendData);
+    			}
+    			//JSON形式に変換
+    	          String json2 = JSON.encode(list2);
+    	          //出力
+    	            out.println(json2);
+    			} catch (SQLException e) {
+    				e.printStackTrace();
+    			}
 
         }else if(recvData.cmd.equals("read3"))
     	{
@@ -208,7 +226,7 @@ public class Ajax10 extends HttpServlet {
 					//RecvData ichiranRecv = new RecvData();
 					IchiranRecv ichiranRecv = recvData.ichiranRecv;
 					//書き込み処理
-					String sql = String.format("insert into db_exam values('%s',db_exam_seq.nextval,'%s','%s')",
+					String sql = String.format("insert into db_exam values('%d',db_exam_seq.nextval,'%s','%s')",
 							ichiranRecv.id,recvData2.name,recvData2.msg);
 					mOracle.execute(sql);
 				}
@@ -217,11 +235,11 @@ public class Ajax10 extends HttpServlet {
 			e1.printStackTrace();
 			}
 
-	      try {
+	     /* try {
 			//データの送信処理
 	    	  IchiranRecv ichiranRecv = recvData.ichiranRecv;
 			ArrayList<SendData> list2 = new ArrayList<SendData>();
-			String sql = String.format("select * from db_exam where kiji_id = '%s'  order by id ",ichiranRecv.id);
+			String sql = String.format("select * from db_exam where kiji_id = '%d'  order by id ",ichiranRecv.id);
 			ResultSet res = mOracle.query(sql);
 			while(res.next())
 			{
@@ -238,7 +256,7 @@ public class Ajax10 extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
+*/
 		}
 	}
 }

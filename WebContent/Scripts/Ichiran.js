@@ -30,14 +30,14 @@ function Main()
 		function onRecv2(data)
 		{
 			output.innerHTML = "<br>";
-			output.innerHTML +=data.title;
+			output.innerHTML += data.title;
 			output.innerHTML += "<br><hr><br>";
 			output.innerHTML += data.news;
 			output.innerHTML += "<br><hr><br>";
-			output.innerHTML += "<input type=\"button\" id=\"bt\" value=\"送信\">" +
-					"<br>名前<br><input type=\"text\" id=\"name\">" +
-					"<br>メッセージ<br><textarea rows=\"5\" cols=\"40\" id=\"msg\"></textarea>" +
-					"<br><div id = \"fput\"></div>";
+			output.innerHTML +="名前<br><input type=\"text\" id=\"name\">" +
+							   "<br>メッセージ<br><textarea rows=\"5\" cols=\"40\" id=\"msg\"></textarea>" +
+							   "<br><input type=\"button\" id=\"bt\" value=\"送信\">" +
+							   "<br><br><div class = \"fput\"><br><br><br></div>";
 
 			//セレクターで各要素のインスタンスを取得
 			var fput = document.querySelector("div#fput");
@@ -45,28 +45,18 @@ function Main()
 			var data2 = document.querySelector("textarea#msg");
 			var button = document.querySelector("input#bt");
 			button.addEventListener("click", onClick, false);
-
-			function onClick()
-			{
-				var recvData2 = {"cmd":"read3"};
-				recvData2.cmd = "write";
-				recvData2.name = data1.value;
-				recvData2.msg = data2.value;
-				AFL.sendJson("Ajax10",recvData2,onRecv2);
-			}
 		}
+
 		//データ受信処理
 		function onRecv3(datas)
 		{
-
-			var fput = document.querySelector("div#fput");
-			//内容のクリア
 			for(var index in datas)
 			{
 				var data = datas[index];
 			fput.innerHTML = AFL.sprintf("[%d]%s<br>%s<hr>",data.id,data.name,data.msg) + fput.innerHTML;
 			}
 		}
+
 
 
 	//ボタンクリック時の送信処理
@@ -78,6 +68,19 @@ function Main()
 		sendData.ichiranRecv = {};
 		sendData.ichiranRecv.id = this.id;
 		AFL.sendJson("Ajax10",sendData,onRecv2);
+		//データ受信要求
+		var sendData = {"cmd":"read3"};
+		AFL.sendJson("Ajax10",sendData,onRecv3);
+
+	}
+
+	function onClick()
+	{
+		var recvData2 = {"cmd":"read3"};
+		recvData2.cmd = "write";
+		recvData2.name = data1.value;
+		recvData2.msg = data2.value;
+		AFL.sendJson("Ajax10",recvData2,onRecv3);
 	}
 
 
@@ -86,8 +89,8 @@ function Main()
 	AFL.sendJson("Ajax10",sendData,onRecv);
 
 	//データ受信要求
-	var sendData = {"cmd":"read3"};
-	AFL.sendJson("Ajax10",sendData,onRecv3);
+//	var sendData = {"cmd":"read3"};
+//	AFL.sendJson("Ajax10",sendData,onRecv3);
 }
 
 
