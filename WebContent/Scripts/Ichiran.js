@@ -21,7 +21,7 @@ function Main()
 			div.id = data.id;
 			div.innerHTML = data.title;
 			output.appendChild(div);
-			div.addEventListener("click",onClick);
+			div.addEventListener("dblclick",ondblClick);
 			output.appendChild(document.createElement("hr"));
 		}
 	}
@@ -39,53 +39,38 @@ function Main()
 					"<br>メッセージ<br><textarea rows=\"5\" cols=\"40\" id=\"msg\"></textarea>" +
 					"<br><div id = \"fput\"></div>";
 
-			/*function Main()
+			//セレクターで各要素のインスタンスを取得
+			var fput = document.querySelector("div#fput");
+			var data1 = document.querySelector("input#name");
+			var data2 = document.querySelector("textarea#msg");
+			var button = document.querySelector("input#bt");
+			button.addEventListener("click", onClick, false);
+
+			function onClick()
 			{
-				//タイトルの設定
-				document.title = "サンプル10";
+				var recvData2 = {"cmd":"read3"};
+				recvData2.cmd = "write";
+				recvData2.name = data1.value;
+				recvData2.msg = data2.value;
+				AFL.sendJson("Ajax10",recvData2,onRecv2);
+			}
+		}
+		//データ受信処理
+		function onRecv3(datas)
+		{
 
-				//セレクターで各要素のインスタンスを取得
-				var output = document.querySelector("div#fput");
-				var data1 = document.querySelector("input#name");
-				var data2 = document.querySelector("textarea#msg");
-				var button = document.querySelector("input#bt");
-				button.addEventListener("click", onClick, false);
-
-				//データ受信処理
-				function onRecv(datas)
-				{
-					//内容のクリア
-					for(var index in datas)
-					{
-						var data = datas[index];
-						output.innerHTML = AFL.sprintf("[%d]%s<br>%s<hr>",data.id,data.name,data.msg) + output.innerHTML;
-					}
-				}
-				//ボタンクリック時の送信処理
-				function onClick()
-				{
-					//データ送信
-					var recvData2 = {};
-					recvData2.cmd = "write";
-					recvData2.name = data1.value;
-					recvData2.msg = data2.value;
-					AFL.sendJson("Ajax10",recvData2,onRecv);
-				}
-
-
-				//データ受信要求
-				var sendData = {"cmd":"read"};
-				AFL.sendJson("Ajax10",sendData,onRecv);
-			}*/
-
+			var fput = document.querySelector("div#fput");
+			//内容のクリア
+			for(var index in datas)
+			{
+				var data = datas[index];
+			fput.innerHTML = AFL.sprintf("[%d]%s<br>%s<hr>",data.id,data.name,data.msg) + fput.innerHTML;
+			}
 		}
 
 
-
-
-
 	//ボタンクリック時の送信処理
-	function onClick()
+	function ondblClick()
 	{
 		//データ送信
 		//データ受信要求
@@ -94,10 +79,17 @@ function Main()
 		sendData.ichiranRecv.id = this.id;
 		AFL.sendJson("Ajax10",sendData,onRecv2);
 	}
+
+
 	//データ受信要求
 	var sendData = {"cmd":"read"};
 	AFL.sendJson("Ajax10",sendData,onRecv);
+
+	//データ受信要求
+	var sendData = {"cmd":"read3"};
+	AFL.sendJson("Ajax10",sendData,onRecv3);
 }
+
 
 
 
