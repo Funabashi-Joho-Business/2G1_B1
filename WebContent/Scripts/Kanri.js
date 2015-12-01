@@ -101,6 +101,7 @@ function start() {
 					'<b>内容:</b><br>'+
 					'<textarea name="naiyo" rows="8" cols="70"></textarea><br>'+
 					'<input type="submit" value="送信"><input type="reset" value="リセット">';
+
 			}
 			else
 				output.innerHTML = "ログインしてください";
