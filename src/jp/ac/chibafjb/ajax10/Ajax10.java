@@ -201,9 +201,9 @@ public class Ajax10 extends HttpServlet {
     			while(res.next())
     			{
     				SendData sendData = new SendData();
-    				sendData.id = res.getInt(1);
-    				sendData.name = res.getString(2);
-    				sendData.msg = res.getString(3);
+    				sendData.id = res.getInt(2);
+    				sendData.name = res.getString(3);
+    				sendData.msg = res.getString(4);
     				kijiSend.list.add(sendData);
     			}
     			//JSON形式に変換
@@ -216,21 +216,38 @@ public class Ajax10 extends HttpServlet {
 
         }else if(recvData.cmd.equals("read3"))
     	{
+        	IchiranRecv ichiranRecv = recvData.ichiranRecv;
+        	KijiSend kijiSend = new KijiSend();
 		//データの受け取り処理
 	       try {
 				if(recvData.recv != null )
 				{
 					//RecvData ichiranRecv = new RecvData();
-					IchiranRecv ichiranRecv = recvData.ichiranRecv;
+					//IchiranRecv ichiranRecv = recvData.ichiranRecv;
 					//書き込み処理
 					String sql = String.format("insert into db_exam values('%d',db_exam_seq.nextval,'%s','%s')",
 							ichiranRecv.id,recvData.recv.name,recvData.recv.msg);
 					mOracle.execute(sql);
 				}
-			} catch (Exception e1) {
-				// TODO 自動生成された catch ブロック
-			e1.printStackTrace();
-			}
+   			//データの送信処理
+   			String sql = String.format("select * from db_exam where kiji_id = '%d'  order by com_id ",ichiranRecv.id);
+   			ResultSet res = mOracle.query(sql);
+   			while(res.next())
+   			{
+   				SendData sendData = new SendData();
+   				sendData.id = res.getInt(1);
+   				sendData.name = res.getString(3);
+   				sendData.msg = res.getString(4);
+   				kijiSend.list.add(sendData);
+   			}
+   			//JSON形式に変換
+   	          String json2 = JSON.encode(kijiSend);
+   	          //出力
+   	            out.println(json2);
+   			} catch (SQLException e) {
+   				e.printStackTrace();
+   			}
+
 
 	     /* try {
 			//データの送信処理

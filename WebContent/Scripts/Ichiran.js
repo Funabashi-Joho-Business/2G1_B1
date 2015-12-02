@@ -55,10 +55,14 @@ function Main()
 	}
 
 	//データ受信処理
-	function onRecv3(datas)
+	function onRecv3(data)
 	{
-
-
+		var fput = document.querySelector("div.fput");
+		for(var index in data.list)
+		{
+			var datas = data.list[index];
+		fput.innerHTML = AFL.sprintf("[%d]%s<br>%s<hr>",datas.id,datas.name,datas.msg) + fput.innerHTML;
+		}
 	}
 
 
