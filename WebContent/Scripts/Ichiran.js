@@ -58,6 +58,7 @@ function Main()
 	function onRecv3(datas)
 	{
 
+
 	}
 
 
@@ -73,8 +74,8 @@ function Main()
 		sendData.ichiranRecv.id = this.id;
 		AFL.sendJson("Ajax10",sendData,onRecv2);
 		//データ受信要求
-		var sendData = {"cmd":"read3"};
-		AFL.sendJson("Ajax10",sendData,onRecv3);
+		//var sendData = {"cmd":"read3"};
+		//AFL.sendJson("Ajax10",sendData,onRecv3);
 
 	}
 

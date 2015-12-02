@@ -196,7 +196,7 @@ public class Ajax10 extends HttpServlet {
 
             try {
     			//データの送信処理
-    			String sql = String.format("select * from db_exam where kiji_id = '%d'  order by kiji_id ",ichiranRecv.id);
+    			String sql = String.format("select * from db_exam where kiji_id = '%d'  order by com_id ",ichiranRecv.id);
     			ResultSet res = mOracle.query(sql);
     			while(res.next())
     			{
